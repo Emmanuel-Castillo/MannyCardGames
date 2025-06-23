@@ -35,6 +35,7 @@ export function ThemedTextInput({
           paddingHorizontal: 8,
           paddingVertical: 16,
           borderRadius: 8,
+          width: "100%"
         },
         style,
       ]}

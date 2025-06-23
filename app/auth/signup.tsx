@@ -16,8 +16,8 @@ export default function SignUpcreen() {
     }
   }, [user]);
 
-  const registerUser = async (email: string, password: string) => {
-    await signUp(email, password);
+  const registerUser = async (email: string, password: string, userName: string) => {
+    await signUp(email, password, userName);
   };
 
   return (
