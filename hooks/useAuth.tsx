@@ -10,20 +10,23 @@ import {
 import { doc, setDoc } from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react";
 
+// Type defined for auth context
 type AuthContextType = {
   user: User | null;
   loading: Boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, username: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string, username: string) => Promise<void>;
   logOut: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Provides context through entire app
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Adds observer to user's sign in state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
@@ -37,7 +40,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await signInWithEmailAndPassword(auth, email, password);
   };
 
-  const signUp = async (email: string, username: string, password: string) => {
+  const signUp = async (email: string, password: string, username: string ) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -47,11 +50,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const newUser = userCredential.user;
       setUser(newUser);
 
-      // Create user profile in Firestore
+      // Create user profile in Firestore once registration is complete
       await setDoc(doc(db, "users", newUser.uid), {
         email: newUser.email,
         name: username,
-        avatar: "",
+        avatar: null,
         friends: [],
         friendRequests: [],
         level: 0,
@@ -88,6 +91,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+// React hook to use auth context provided by AuthContext.Provider
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {

@@ -12,6 +12,7 @@ import "react-native-reanimated";
 
 import { AuthProvider } from "@/hooks/useAuth"; // adjust path if needed
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { UserDataProvider } from "@/hooks/useUserData";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -25,13 +26,17 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
+      <UserDataProvider>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </UserDataProvider>
     </AuthProvider>
   );
 }

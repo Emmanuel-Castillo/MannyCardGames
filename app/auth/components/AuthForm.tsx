@@ -137,7 +137,7 @@ export default function AuthForm({
           style={styles.formButton}
           onPress={() => validateAndSubmitForm()}
         >
-          <Text style={styles.buttonText}>LOGIN</Text>
+          <Text style={styles.buttonText}>{formTitle.toUpperCase()}</Text>
         </TouchableOpacity>
       )}
 
