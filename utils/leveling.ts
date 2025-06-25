@@ -3,7 +3,7 @@
 
 // Returns exp needed for the given level (linear scaling)
 // Meaning as each level progresses, you need an extra 100 exp to level up
-function getExpForLevel(level: number): number {
+export function getExpForLevel(level: number): number {
   return 100 * level;
 }
 

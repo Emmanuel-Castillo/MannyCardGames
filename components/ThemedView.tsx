@@ -5,12 +5,14 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 export type ThemedViewProps = ViewProps & {
   lightColor?: string;
   darkColor?: string;
+  addBorder?: boolean | null;
 };
 
 export function ThemedView({
   style,
   lightColor,
   darkColor,
+  addBorder,
   ...otherProps
 }: ThemedViewProps) {
   const backgroundColor = useThemeColor(
@@ -18,10 +20,15 @@ export function ThemedView({
     "background"
   );
 
+  const borderColor = addBorder ?  useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "border"
+  ) : undefined;
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={[{ backgroundColor }, style]}
+      style={[{ backgroundColor, borderColor }, style]}
       {...otherProps}
     />
   );
