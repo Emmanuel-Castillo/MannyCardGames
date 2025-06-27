@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
 
 // Ignore error, Typescript issue
 import { getReactNativePersistence, initializeAuth } from "firebase/auth";
@@ -29,3 +30,6 @@ export const auth = initializeAuth(app, {
 
 // Initialize Firebase Cloud Firestore and get a reference to the service
 export const db = getFirestore(app)
+
+// Initialize Firebase Cloud Storage and get a reference to the service
+export const storage = getStorage(app)

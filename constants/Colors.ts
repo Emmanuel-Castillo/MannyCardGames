@@ -9,7 +9,7 @@ const tintColorDark = '#fff';
 export const Colors = {
   light: {
     text: '#11181C',
-    touchableOpacityBackground: "pink",
+    touchableOpacityBackground: "lightblue",
     background: '#fff',
     disabledBackground: "#e0e0e0",
     tint: tintColorLight,
@@ -20,7 +20,7 @@ export const Colors = {
   },
   dark: {
     text: '#ECEDEE',
-    touchableOpacityBackground: "lightgreen",
+    touchableOpacityBackground: "lightblue",
     background: '#151718',
     disabledBackground: "#2c2c2c",
     tint: tintColorDark,

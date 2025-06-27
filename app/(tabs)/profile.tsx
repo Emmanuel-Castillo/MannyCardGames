@@ -1,4 +1,3 @@
-import { Image } from "expo-image";
 import { StyleSheet } from "react-native";
 
 import { Collapsible } from "@/components/Collapsible";
@@ -6,56 +5,61 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedTouchableOpacity } from "@/components/ThemedTouchableOpacity";
 import { ThemedView } from "@/components/ThemedView";
-import { IconSymbol } from "@/components/ui/IconSymbol";
+import AvatarComponent from "@/components/user-data/AvatarComponent";
 import { useUserData } from "@/hooks/useUserData";
 import { getExpForLevel, getProgress } from "@/utils/leveling";
 import { capitalizeFirstLetter } from "@/utils/stringFormatting";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import * as Clipboard from "expo-clipboard";
+import { useRouter } from "expo-router";
 
 export default function ProfileScreen() {
   const { userData } = useUserData();
+  const router = useRouter();
 
   if (!userData) {
     return null;
   }
-  const { name, avatar, level, currExp, stats } = userData;
+  const { name, avatar, level, currExp, stats, id } = userData;
   const expToNextLevelProgress = getProgress(currExp, level);
   const expToNextLevel = getExpForLevel(level + 1);
+
+  const onCopyIdButtonPress = async () => {
+    await Clipboard.setStringAsync(id)
+  }
 
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       headerImage={
         // Avatar image container component (to be reused later)
-        <ThemedView
-          style={{
-            height: 150,
-            width: 150,
-            backgroundColor: "blue",
-            position: "absolute",
-            bottom: -20,
-            alignSelf: "center",
-            borderRadius: 75,
-            overflow: "hidden",
-            alignContent: "center",
-          }}
-        >
-          <Image
-            source={
-              avatar
-                ? avatar
-                : require("@/assets/images/partial-react-logo.png")
-            }
+        <>
+          <AvatarComponent
+            avatar={avatar}
+            size={150}
             style={{
-              height: "100%",
-              width: "100%",
+              position: "absolute",
+              bottom: -20,
+              alignSelf: "center",
+              // borderRadius: 75,
+              alignContent: "center",
             }}
           />
-        </ThemedView>
+        </>
       }
+      headerImageZIndex={1}
     >
       <ThemedView style={styles.profileContainer}>
         <ThemedView style={styles.titleContainer}>
           <ThemedText type="title">{name}</ThemedText>
+          <ThemedView style={styles.subtitleContainer}>
+            <ThemedText type="subtitle" style={{ fontSize: 12 }}>
+              ID: {id}
+            </ThemedText>
+            <ThemedTouchableOpacity style={{backgroundColor: "transparent"}} onPress={onCopyIdButtonPress}>
+              <Ionicons name="clipboard" color={"white"} />
+            </ThemedTouchableOpacity>
+          </ThemedView>
         </ThemedView>
 
         {/* Level and exp progress bar component (to be reused later) */}
@@ -109,9 +113,10 @@ export default function ProfileScreen() {
 
       {/* Themed touchable opacity placed at bottom right corner of screen (can be reused later) */}
       <ThemedTouchableOpacity
-        onPress={() => {}}
+        onPress={() => {
+          router.push("/settings/editProfile");
+        }}
         style={{
-          width: 55,
           position: "absolute",
           bottom: 10,
           right: 25,
@@ -119,7 +124,7 @@ export default function ProfileScreen() {
           padding: 8,
         }}
       >
-        <IconSymbol name="pencil" color="#808080" size={40} />
+        <Ionicons name="pencil" size={40}/>
       </ThemedTouchableOpacity>
     </ParallaxScrollView>
   );
@@ -132,6 +137,14 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     alignItems: "center",
+    gap: 8,
+  },
+  subtitleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 8,
   },
   progressBarContainer: {
     width: "100%",

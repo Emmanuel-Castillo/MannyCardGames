@@ -52,6 +52,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       // Create user profile in Firestore once registration is complete
       await setDoc(doc(db, "users", newUser.uid), {
+        id: newUser.uid,
         email: newUser.email,
         name: username,
         avatar: null,

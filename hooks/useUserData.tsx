@@ -1,5 +1,6 @@
-import { db } from "@/firebaseConfig";
-import { doc, onSnapshot } from "firebase/firestore";
+import { db, storage } from "@/firebaseConfig";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./useAuth";
 
@@ -10,6 +11,7 @@ export interface GameStats {
 }
 
 export interface UserData {
+  id: string,
   email: string;
   name: string;
   avatar: string | null;
@@ -27,6 +29,8 @@ export interface UserData {
 // Type defined for user data context
 type UserDataContextType = {
   userData: UserData | null;
+  changeName: (newName: string) => Promise<void>;
+  changeAvatar: (imageUri: string | null) => Promise<string | null>;
 };
 
 const UserDataContext = createContext<UserDataContextType | undefined>(
@@ -61,8 +65,61 @@ export const UserDataProvider = ({
     return () => unsub();
   }, [user]);
 
+  const changeName = async (newName: string) => {
+    if (!user) return;
+
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      await updateDoc(userDocRef, {
+        name: newName,
+      });
+
+      setUserData((prevUserData) => {
+        if (!prevUserData) return null;
+
+        return {
+          ...prevUserData,
+          name: newName,
+        };
+      });
+    } catch (error) {
+      console.error("Error saving name: ", error);
+      throw error;
+    }
+  };
+
+  const changeAvatar = async (imageUri: string | null) => {
+    if (!imageUri || !user) return null;
+
+    try {
+      const response = await fetch(imageUri);
+      const blob = await response.blob();
+
+      // Upload image blob to Firebase
+      const userAvatarRef = ref(
+        storage,
+        `userAvatar/${user.uid}/avatar.jpg`
+      );
+      await uploadBytes(userAvatarRef, blob);
+
+      // Create download url link for public image storage reference
+      const downloadURL = await getDownloadURL(userAvatarRef);
+
+      // Then use that link to update the avatar field in user data
+      const userDocRef = doc(db, "users", user.uid);
+      await updateDoc(userDocRef, {
+        avatar: downloadURL,
+      });
+
+      return downloadURL;
+    } catch (error) {
+      console.error("Error uploading image: ", error);
+      throw error;
+    }
+  };
+
   return (
-    <UserDataContext.Provider value={{ userData }}>
+    <UserDataContext.Provider value={{ userData, changeName, changeAvatar }}>
       {children}
     </UserDataContext.Provider>
   );
