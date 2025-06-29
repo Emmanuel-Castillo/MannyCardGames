@@ -27,13 +27,13 @@ export interface UserData {
 }
 
 // Type defined for user data context
-type UserDataContextType = {
+export type UserDataContextType = {
   userData: UserData | null;
   changeName: (newName: string) => Promise<void>;
   changeAvatar: (imageUri: string | null) => Promise<string | null>;
 };
 
-const UserDataContext = createContext<UserDataContextType | undefined>(
+export const UserDataContext = createContext<UserDataContextType | undefined>(
   undefined
 );
 

@@ -1,6 +1,6 @@
 // app/auth/signin.tsx
 import { ThemedView } from "@/components/ThemedView";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/user/useAuth";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native";

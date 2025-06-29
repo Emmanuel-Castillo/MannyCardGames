@@ -10,9 +10,9 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import "react-native-reanimated";
 
-import { AuthProvider } from "@/hooks/useAuth"; // adjust path if needed
-import { useColorScheme } from "@/hooks/useColorScheme";
-import { UserDataProvider } from "@/hooks/useUserData";
+import { useColorScheme } from "@/hooks/colorAndTheme/useColorScheme";
+import { AuthProvider } from "@/hooks/user/useAuth"; // adjust path if needed
+import { UserDataProvider } from "@/hooks/user/useUserData";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();

@@ -6,7 +6,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedTouchableOpacity } from "@/components/ThemedTouchableOpacity";
 import { ThemedView } from "@/components/ThemedView";
 import AvatarComponent from "@/components/user-data/AvatarComponent";
-import { useUserData } from "@/hooks/useUserData";
+import { useUserData } from "@/hooks/user/useUserData";
 import { getExpForLevel, getProgress } from "@/utils/leveling";
 import { capitalizeFirstLetter } from "@/utils/stringFormatting";
 import Ionicons from "@expo/vector-icons/Ionicons";

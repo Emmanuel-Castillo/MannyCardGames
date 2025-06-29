@@ -1,6 +1,6 @@
 import { TouchableOpacity, type TouchableOpacityProps } from "react-native";
 
-import { useThemeColor } from "@/hooks/useThemeColor";
+import { useThemeColor } from "@/hooks/colorAndTheme/useThemeColor";
 
 export type ThemedTouchableOpacityProps = TouchableOpacityProps & {
   lightColor?: string;

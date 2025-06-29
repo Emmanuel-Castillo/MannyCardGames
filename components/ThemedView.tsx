@@ -1,6 +1,6 @@
 import { KeyboardAvoidingView, Platform, type ViewProps } from "react-native";
 
-import { useThemeColor } from "@/hooks/useThemeColor";
+import { useThemeColor } from "@/hooks/colorAndTheme/useThemeColor";
 
 export type ThemedViewProps = ViewProps & {
   lightColor?: string;

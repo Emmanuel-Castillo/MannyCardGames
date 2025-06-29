@@ -6,9 +6,8 @@ import { ThemedTouchableOpacity } from "@/components/ThemedTouchableOpacity";
 import { ThemedView } from "@/components/ThemedView";
 import { useUserData } from "@/hooks/user/useUserData";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { router } from "expo-router";
 
-export default function HomeScreen() {
+export default function MultiplayerRoom() {
   const { userData } = useUserData();
 
   if (!userData) {
@@ -32,21 +31,16 @@ export default function HomeScreen() {
       }
     >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome, {name}!</ThemedText>
+        <ThemedText type="title">Local Multiplayer</ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedTouchableOpacity>
-          <ThemedText>Single-player</ThemedText>
+            <ThemedText>Create Room</ThemedText>
         </ThemedTouchableOpacity>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedTouchableOpacity onPress={() => router.replace("/multiplayer/local")}>
-          <ThemedText>Local Multi-player</ThemedText>
-        </ThemedTouchableOpacity>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedTouchableOpacity onPress={() => router.replace("/multiplayer/online")}>
-          <ThemedText>Online Multi-player</ThemedText>
+        <ThemedTouchableOpacity>
+            <ThemedText>Join Room</ThemedText>
         </ThemedTouchableOpacity>
       </ThemedView>
     </ParallaxScrollView>

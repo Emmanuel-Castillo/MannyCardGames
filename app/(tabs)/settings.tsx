@@ -4,7 +4,7 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedTouchableOpacity } from "@/components/ThemedTouchableOpacity";
 import { ThemedView } from "@/components/ThemedView";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/user/useAuth";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Href, useRouter } from "expo-router";
 

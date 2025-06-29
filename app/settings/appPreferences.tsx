@@ -3,7 +3,7 @@ import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { ThemedTouchableOpacity } from "@/components/ThemedTouchableOpacity";
 import { ThemedView } from "@/components/ThemedView";
 import AvatarComponent from "@/components/user-data/AvatarComponent";
-import { useUserData } from "@/hooks/useUserData";
+import { useUserData } from "@/hooks/user/useUserData";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
